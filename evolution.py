@@ -17,3 +17,23 @@ sigma = 0.1 # mutations are done on a Gaussian Distribution, sigma is the standa
 
 # initialize the players with randomized parameters
 players = [Player([random.uniform(-1, 1) for i in range(0, 10)]) for j in range(0, num_players)]
+
+# run the genetic algorithm
+for generation in range(0, max_generations):
+    print 'Generation ' + str(generation)
+
+    # run test for each player in a single generation
+    fitness = {}
+    for player in players:
+        fitness[player] = 0
+        for trial in range(0, num_trials):
+            player.new_game()
+            num_moves = 0
+            while player.tetris.ongoing_game and num_moves < max_moves:
+                num_moves += 1
+                player.make_move()
+            fitness[player] += -player.tetris.score / (max_moves * num_trials)
+            print 'Trial '+str(trial+1)+':', player.tetris.score, player.params
+            sorted_players = sorted(fitness.items(), key=operator.itemgetter(1))
+
+    print fitness.values()
