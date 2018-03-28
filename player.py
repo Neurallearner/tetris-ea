@@ -20,10 +20,24 @@ class Player(object):
 
     # player makes a single move on the ongoing game of tetris
     def make_move(self):
-        
-        # TODO
-        
-        return
+        best_rots = 0
+        best_offset = 0
+        best_score = -float('inf')
+
+        # iterate through all possible combinations of moves using the next two tetrominos
+        current_grid = tetris_shapes[self.tetris.current_shape]
+        next_grid = tetris_shapes[self.tetris.next_shape]
+        for rot1 in range(0, max_rotations[self.tetris.current_shape] + 1):
+            for offset1 in range(0, self.tetris.board.width - len(current_grid[0]) + 1):
+                for rot2 in range(0, max_rotations[self.tetris.next_shape] + 1):
+                    for offset2 in range(0, self.tetris.board.width - len(next_grid[0]) + 1):
+                        
+                        # TODO
+                        
+                    next_grid = rotate_clockwise(next_grid)
+            current_grid = rotate_clockwise(current_grid)
+        self.tetris.make_move(best_rots, best_offset)
+        return [best_rots, best_offset]
 
     # return the score of the Tetris board according to the initially assigned parameters
     def score(self, board):
