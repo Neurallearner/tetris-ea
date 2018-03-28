@@ -37,3 +37,33 @@ for generation in range(0, max_generations):
             sorted_players = sorted(fitness.items(), key=operator.itemgetter(1))
 
     print fitness.values()
+
+    players = []
+
+    # add top players
+    for i in range(0, int(0.2*num_players)):
+        players.append(Player(sorted_players[i][0].params))
+        print 'Added (survived): ', sorted_players[i][0].params
+
+    # add mutated players
+    for i in range(0, int(0.4 * num_players)):
+        mutated_player = sorted_players[random.randint(0, num_players - 1)][0]
+        mutated_params = [param for param in mutated_player.params]
+        for j in range(0, len(mutated_params)):
+            if random.random() < mutation_rate:
+                mutated_params[j] += random.gauss(0, sigma)
+        mutated_player = Player(mutated_params)
+        players.append(mutated_player)
+        print 'Added (mutate): ', mutated_player.params
+
+    # add children of mated players
+    while len(players) < num_players:
+        parents = random.sample(0.4*range(num_players), 2)
+        child_params = []
+        for i in range(0, len(sorted_players[0][0].params)):
+            if random.random() < 0.5:
+                child_params.append(sorted_players[parents[0]][0].params[i])
+            else:
+                child_params.append(sorted_players[parents[1]][0].params[i])
+        players.append(Player(child_params))
+        print 'Added (child): ', child_params
