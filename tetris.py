@@ -172,49 +172,49 @@ class Tetris(object):
 
 # Uncomment the following code to play tetris using keyboard input and pygame animation.
 
-# game = Tetris()
-# pygame.init()
-# screen = pygame.display.set_mode((300,450))
-# screen.fill(white)
-#
-# while game.ongoing_game:
-#     for row in game.board.grid:
-#         print row
-#     print 'Current Shape:'
-#     for row in tetris_shapes[game.current_shape]:
-#         print row
-#     print 'Next Shape:'
-#     for row in tetris_shapes[game.next_shape]:
-#         print row
-#     print 'Current Score: ' + str(game.score)
-#     num_rotations = input('Number of rotations: ')
-#     offset = input('Offset by: ')
-#     # num_rotations = random.randint(0, 3)
-#     # offset = random.randint(0, 7)
-#     game.make_move(num_rotations, offset)
-#     for x in range(0, len(game.board.grid)):
-#         for y in range(0, len(game.board.grid[0])):
-#             entry = game.board.grid[x][y]
-#             pygame.draw.rect(screen, colors[entry], (50+15*y, 50+15*x, 15, 15), 0)
-#
-#     next_shape = tetris_shapes[game.next_shape]
-#     current_shape = tetris_shapes[game.current_shape]
-#
-#     for x in range(0, 4):
-#         for y in range(0, 4):
-#             if x < len(current_shape) and y < len(current_shape[0]) and not current_shape[x][y] == 0:
-#                 entry = current_shape[x][y]
-#                 pygame.draw.rect(screen, colors[entry], (200+15*y, 50+15*x, 15, 15), 0)
-#             else:
-#                 pygame.draw.rect(screen, white, (200+15*y, 50+15*x, 15, 15), 0)
-#
-#     for x in range(0, 4):
-#         for y in range(0, 4):
-#             if x < len(next_shape) and y < len(next_shape[0]) and not next_shape[x][y] == 0:
-#                 entry = next_shape[x][y]
-#                 pygame.draw.rect(screen, colors[entry], (200+15*y, 90+15*x, 15, 15), 0)
-#             else:
-#                 pygame.draw.rect(screen, white, (200+15*y, 90+15*x, 15, 15), 0)
-#
-#     pygame.display.update()
-#     time.sleep(pause_interval)
+game = Tetris()
+pygame.init()
+screen = pygame.display.set_mode((300,450))
+screen.fill(white)
+
+while game.ongoing_game:
+    for row in game.board.grid:
+        print row
+    print 'Current Shape:'
+    for row in tetris_shapes[game.current_shape]:
+        print row
+    print 'Next Shape:'
+    for row in tetris_shapes[game.next_shape]:
+        print row
+    print 'Current Score: ' + str(game.score)
+    num_rotations = input('Number of rotations: ')
+    offset = input('Offset by: ')
+    # num_rotations = random.randint(0, 3)
+    # offset = random.randint(0, 7)
+    game.make_move(num_rotations, offset)
+    for x in range(0, len(game.board.grid)):
+        for y in range(0, len(game.board.grid[0])):
+            entry = game.board.grid[x][y]
+            pygame.draw.rect(screen, colors[entry], (50+15*y, 50+15*x, 15, 15), 0)
+
+    next_shape = tetris_shapes[game.next_shape]
+    current_shape = tetris_shapes[game.current_shape]
+
+    for x in range(0, 4):
+        for y in range(0, 4):
+            if x < len(current_shape) and y < len(current_shape[0]) and not current_shape[x][y] == 0:
+                entry = current_shape[x][y]
+                pygame.draw.rect(screen, colors[entry], (200+15*y, 50+15*x, 15, 15), 0)
+            else:
+                pygame.draw.rect(screen, white, (200+15*y, 50+15*x, 15, 15), 0)
+
+    for x in range(0, 4):
+        for y in range(0, 4):
+            if x < len(next_shape) and y < len(next_shape[0]) and not next_shape[x][y] == 0:
+                entry = next_shape[x][y]
+                pygame.draw.rect(screen, colors[entry], (200+15*y, 90+15*x, 15, 15), 0)
+            else:
+                pygame.draw.rect(screen, white, (200+15*y, 90+15*x, 15, 15), 0)
+
+    pygame.display.update()
+    time.sleep(pause_interval)
