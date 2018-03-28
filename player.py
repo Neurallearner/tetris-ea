@@ -28,11 +28,11 @@ class Player(object):
     # return the score of the Tetris board according to the initially assigned parameters
     def score(self, board):
         score = 0
-        
-        # TODO
-
+        feats = self.features(board)
+        for i in range(0, len(self.params)):
+            score += self.params[i] * feats[i]
         return score
-        
+
     # return the features array of a particular Tetris board
     def features(self, board_object):
         my_grid = board_object.grid
