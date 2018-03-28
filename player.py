@@ -32,14 +32,72 @@ class Player(object):
         # TODO
 
         return score
-
+        
     # return the features array of a particular Tetris board
     def features(self, board_object):
         my_grid = board_object.grid
-        
-        # TODO
+        heights = []
+        for x in range(0, len(my_grid[0])):
+            found_height = False
+            for y in range(0, len(my_grid)):
+                if not found_height and not my_grid[y][x] == 0:
+                    heights.append(board_object.height - y)
+                    found_height = True
+                if not found_height and y == len(my_grid) - 1:
+                    heights.append(0)
 
-        return
+        # height of tallest column
+        f1 = -1
+        # sum of absolute value of difference between adjacent heights
+        f2 = 0
+        # number of pits
+        f3 = 0
+        min_height = float('inf')
+        second_min_height = float('inf')
+        for i in range(0, len(heights)):
+            is_pit = True
+            if i > 0 and heights[i] >= heights[i-1]:
+                is_pit = False
+            if i < len(heights)-1 and heights[i] >= heights[i+1]:
+                is_pit = False
+            if is_pit:
+                f3 += 1
+            if heights[i] < min_height:
+                second_min_height = min_height
+                min_height = heights[i]
+            elif heights[i] < second_min_height:
+                second_min_height = heights[i]
+            if i > 0:
+                f2 += abs(heights[i] - heights[i-1])
+            if heights[i] > f1:
+                f1 = heights[i]
+        # number of tetrises that have been made in the board
+        f4 = board_object.num_tetrises
+        # difference between smallest height and second smallest height
+        f5 = second_min_height - min_height
+        # minimum height plus one
+        f6 = min_height
+        # sum of weights of blocks, where weight is the height of the block
+        f7 = 0
+        # number of vertically connected holes
+        f8 = 0
+        # total number of blocks
+        f9 = 0
+        # number of columns that contains at least one hole
+        f10 = 0
+        for y in range(0, len(my_grid[0])):
+            found_hole = False
+            for x in range(0, len(my_grid)):
+                if not my_grid[x][y] == 0:
+                    f7 += len(my_grid) - x
+                    f9 += 1
+                elif len(my_grid) - x < heights[y] and not my_grid[x - 1][y] == 0:
+                    f8 += 1
+                    if not found_hole:
+                        f10 += 1
+                        found_hole = True
+
+        return [f1, f2, f3, f4, f5, f6, f7, f8, f9, f10]
 
 
 # Uncomment the following code to watch a player with specified input parameters play tetris.
